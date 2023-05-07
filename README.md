@@ -11,7 +11,7 @@
 
 ### Ссылка на проект:
 
-[id]: https://leonidred.github.io/mesto-react/
+<https://leonidred.github.io/mesto-react/>
 
 ### Установка и запуск приложения:
 
