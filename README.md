@@ -11,21 +11,21 @@
 
 ### Ссылка на проект:
 
-https://leonidred.github.io/mesto-react/
+[id]: https://leonidred.github.io/mesto-react/
 
 ### Установка и запуск приложения:
 
 Клонировать репозиторий с использованием SSH:
 
-git@github.com:LeonidRed/mesto-react.git
+`git@github.com:LeonidRed/mesto-react.git`
 
 Установить зависимости:
 
-npm install
+`npm install`
 
 Запустить приложение:
 
-npm run start
+`npm run start`
 
 
 
