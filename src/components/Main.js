@@ -48,9 +48,6 @@ export default function Main(props) {
             <Card
               card={card}
               key={card._id}
-              link={card.link}
-              name={card.name}
-              likes={card.likes}
               onCardClick={onCardClick}
             />
           ))}
