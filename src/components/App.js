@@ -8,7 +8,6 @@ import { api } from "../utils/Api"
 import { CurrentUserContext } from "../contexts/CurrentUserContext"
 
 function App() {
-
   const [isEditProfilePopupOpen, setEditProfilePopupOpen] = React.useState(false)
   const [isAddPlacePopupOpen, setAddPlacePopupOpen] = React.useState(false)
   const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = React.useState(false)
@@ -46,12 +45,30 @@ function App() {
     setEditAvatarPopupOpen(true)
   }
 
-  function handleDeleteCardClick() {
-    setDeleteCardPopupOpen(true)
-  }
+  // function handleDeleteCardClick() {
+  //   setDeleteCardPopupOpen(true)
+  // }
 
   function handleCardClick(card) {
     setSelectedCard({ name: `${card.name}`, link: `${card.link}` })
+  }
+
+  function handleLikeClick(card) {
+    // проверяем, есть ли уже лайк на этой карточке
+    const isLiked = card.likes.some(i => i._id === currentUser._id)
+
+    // Отправляем запрос в API и получаем обновлённые данные карточки
+    api.changeLikeCardStatus(card._id, !isLiked)
+      .then((newCard) => {
+        setCards((state) => state.map((c) => c._id === card._id ? newCard : c));
+      })
+      .catch(err => console.log(err))
+  }
+
+  function handleCardDelete(card) {
+    console.log(card)
+    api.deleteCard(card._id)
+      .then(setCards((state) => state.filter((c) => c._id !== card._id)))
   }
 
   function closeAllPopups() {
@@ -71,9 +88,11 @@ function App() {
           onEditProfile={handleEditProfileClick}
           onAddPlace={handleAddPlaceClick}
           onEditAvatar={handleEditAvatarClick}
-          onDeleteButton={handleDeleteCardClick}
+          // onDeleteButton={handleDeleteCardClick}
           onCardClick={handleCardClick}
-          card={cards}
+          cards={cards}
+          onCardLike={handleLikeClick}
+          onCardDelete={handleCardDelete}
         />
         <Footer />
 

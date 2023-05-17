@@ -1,10 +1,9 @@
-import { api } from "../utils/Api"
+// import { api } from "../utils/Api"
 import React from "react"
 import Card from "./Card"
 import { CurrentUserContext } from "../contexts/CurrentUserContext"
 
 export default function Main(props) {
-
   const currentUser = React.useContext(CurrentUserContext)
   // console.log(currentUser);
 
@@ -12,12 +11,15 @@ export default function Main(props) {
   const onEditProfile = props.onEditProfile
   const onAddPlace = props.onAddPlace
   const onCardClick = props.onCardClick
-  const onDeleteButton = props.onDeleteButton
+  // const onDeleteButton = props.onDeleteButton
+  const cards = props.cards
+  const onCardLike = props.onCardLike
+  const onCardDelete = props.onCardDelete
 
   // const [userName, setUserName] = React.useState()
   // const [userDescription, setUserDescription] = React.useState()
   // const [userAvatar, setUserAvatar] = React.useState()
-  const [cards, setCards] = React.useState([])
+  // const [cards, setCards] = React.useState([])
 
   // React.useEffect(() => {
   //   Promise.all([api.getUserInfo(), api.getInitialCards()])
@@ -30,13 +32,13 @@ export default function Main(props) {
   //     .catch(err => console.log(err))
   // }, [])
 
-  React.useEffect(() => {
-    api.getInitialCards()
-      .then(cards => {
-        setCards(cards)
-      })
-      .catch(err => console.log(err))
-  }, [])
+  // React.useEffect(() => {
+  //   api.getInitialCards()
+  //     .then(cards => {
+  //       setCards(cards)
+  //     })
+  //     .catch(err => console.log(err))
+  // }, [])
 
   return (
     <main className="content">
@@ -63,7 +65,9 @@ export default function Main(props) {
               card={card}
               key={card._id}
               onCardClick={onCardClick}
-              onDeleteButton={onDeleteButton}
+              // onDeleteButton={onDeleteButton}
+              onCardLike={onCardLike}
+              onCardDelete={onCardDelete}
             />
           ))}
         </ul>

@@ -15,8 +15,16 @@ export default function Card(props) {
     props.onCardClick(props.card)
   }
 
+  // function handleDeleteClick() {
+  //   props.onDeleteButton()
+  // }
+
+  function handleLikeClick() {
+    props.onCardLike(props.card)
+  }
+
   function handleDeleteClick() {
-    props.onDeleteButton()
+    props.onCardDelete(props.card)
   }
 
   return (
@@ -26,7 +34,7 @@ export default function Card(props) {
       <div className="element__area">
         <h2 className="element__area-title">{props.card.name}</h2>
         <div className="element__area-like-section">
-          <button className={cardLikeButtonClassName} type="button" aria-label="Кнопка нравится"></button>
+          <button className={cardLikeButtonClassName} type="button" aria-label="Кнопка нравится" onClick={handleLikeClick}></button>
           <p className="element__area-like-counter">{props.card.likes.length}</p>
         </div>
       </div>
