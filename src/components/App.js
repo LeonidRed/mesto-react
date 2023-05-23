@@ -6,6 +6,8 @@ import PopupWithForm from "./PopupWithForm"
 import ImagePopup from "./ImagePopup"
 import { api } from "../utils/Api"
 import { CurrentUserContext } from "../contexts/CurrentUserContext"
+import EditProfilePopup from "./EditProfilePopup"
+
 
 function App() {
   const [isEditProfilePopupOpen, setEditProfilePopupOpen] = React.useState(false)
@@ -66,9 +68,19 @@ function App() {
   }
 
   function handleCardDelete(card) {
-    console.log(card)
     api.deleteCard(card._id)
       .then(setCards((state) => state.filter((c) => c._id !== card._id)))
+      .catch(err => console.log(err))
+  }
+
+  function handleUpdateUser(data) {
+    api.editProfile(data)
+      .then((res) => {
+        console.log(res);
+        setCurrentUser(res)
+        closeAllPopups();
+      })
+      .catch((err) => console.log(err))
   }
 
   function closeAllPopups() {
@@ -96,12 +108,11 @@ function App() {
         />
         <Footer />
 
-        <PopupWithForm name="profile" title="Редактировать профиль" buttonText="Сохранить" isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} >
-          <input className="popup__input" id="input-name" name="name" type="text" placeholder="Введите имя" minLength="2" maxLength="40" required />
-          <span className="popup__input-error input-name-error">Вы пропустили это поле</span>
-          <input className="popup__input" id="input-prof" name="prof" type="text" placeholder="Введите профессию" minLength="2" maxLength="200" required />
-          <span className="popup__input-error input-prof-error">Вы пропустили это поле</span>
-        </PopupWithForm>
+        <EditProfilePopup
+          isOpen={isEditProfilePopupOpen}
+          onClose={closeAllPopups}
+          onUpdateUser={handleUpdateUser}
+        />
 
         <PopupWithForm name="add" title="Новое место" buttonText="Создать" isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} >
           <input className="popup__input" id="input-title" name="title" type="text" placeholder="Название" minLength="2" maxLength="30" required />
@@ -109,13 +120,13 @@ function App() {
           <input className="popup__input" id="input-link" name="link" type="url" placeholder="Ссылка на картинку" required />
           <span className="popup__input-error input-link-error">Вы пропустили это поле</span>
         </PopupWithForm>
-      />
+
 
         <PopupWithForm name="avatar" title="Обновить аватар" buttonText="Сохранить" isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} >
           <input className="popup__input" id="input-link-avatar" name="link" type="url" placeholder="Ссылка на картинку" required />
           <span className="popup__input-error input-link-avatar-error">Вы пропустили это поле</span>
         </PopupWithForm>
-      />
+
 
         <PopupWithForm name="delete" title="Вы уверены?" buttonText="Да" isOpen={isDeleteCardPopupOpen} onClose={closeAllPopups} />
 
