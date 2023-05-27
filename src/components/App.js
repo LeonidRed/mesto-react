@@ -8,7 +8,7 @@ import { api } from "../utils/Api"
 import { CurrentUserContext } from "../contexts/CurrentUserContext"
 import EditProfilePopup from "./EditProfilePopup"
 import EditAvatarPopup from "./EditAvatarPopup"
-
+import AddPlacePopup from "./AddPlacePopup"
 
 function App() {
   const [isEditProfilePopupOpen, setEditProfilePopupOpen] = React.useState(false)
@@ -18,14 +18,6 @@ function App() {
   const [selectedCard, setSelectedCard] = React.useState({ name: '', link: '' })
   const [currentUser, setCurrentUser] = React.useState({})
   const [cards, setCards] = React.useState([])
-
-  // React.useEffect(() => {
-  //   api.getUserInfo()
-  //     .then(user => {
-  //       setCurrentUser(user)
-  //     })
-  //     .catch(err => console.log(err))
-  // }, [])
 
   React.useEffect(() => {
     Promise.all([api.getUserInfo(), api.getInitialCards()])
@@ -60,10 +52,9 @@ function App() {
     // проверяем, есть ли уже лайк на этой карточке
     const isLiked = card.likes.some(i => i._id === currentUser._id)
 
-    // Отправляем запрос в API и получаем обновлённые данные карточки
     api.changeLikeCardStatus(card._id, !isLiked)
       .then((newCard) => {
-        setCards((state) => state.map((c) => c._id === card._id ? newCard : c));
+        setCards((state) => state.map((c) => c._id === card._id ? newCard : c))
       })
       .catch(err => console.log(err))
   }
@@ -78,7 +69,7 @@ function App() {
     api.editProfile(data)
       .then((res) => {
         setCurrentUser(res)
-        closeAllPopups();
+        closeAllPopups()
       })
       .catch((err) => console.log(err))
   }
@@ -86,9 +77,17 @@ function App() {
   function handleUpdateAvatar(data) {
     api.changeAvatar(data)
       .then((res) => {
-        console.log(res);
         setCurrentUser(res)
-        closeAllPopups();
+        closeAllPopups()
+      })
+      .catch((err) => console.log(err))
+  }
+
+  function handleAddPlaceSubmit(data) {
+    api.addCard(data)
+      .then((newCard) => {
+        setCards([newCard, ...cards])
+        closeAllPopups()
       })
       .catch((err) => console.log(err))
   }
@@ -124,12 +123,11 @@ function App() {
           onUpdateUser={handleUpdateUser}
         />
 
-        <PopupWithForm name="add" title="Новое место" buttonText="Создать" isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} >
-          <input className="popup__input" id="input-title" name="title" type="text" placeholder="Название" minLength="2" maxLength="30" required />
-          <span className="popup__input-error input-title-error">Вы пропустили это поле</span>
-          <input className="popup__input" id="input-link" name="link" type="url" placeholder="Ссылка на картинку" required />
-          <span className="popup__input-error input-link-error">Вы пропустили это поле</span>
-        </PopupWithForm>
+        <AddPlacePopup
+          isOpen={isAddPlacePopupOpen}
+          onClose={closeAllPopups}
+          onAddPlace={handleAddPlaceSubmit}
+        />
 
         <EditAvatarPopup
           isOpen={isEditAvatarPopupOpen}
@@ -146,4 +144,4 @@ function App() {
   )
 }
 
-export default App;
+export default App

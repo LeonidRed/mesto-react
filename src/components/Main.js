@@ -5,7 +5,6 @@ import { CurrentUserContext } from "../contexts/CurrentUserContext"
 
 export default function Main(props) {
   const currentUser = React.useContext(CurrentUserContext)
-  // console.log(currentUser);
 
   const onEditAvatar = props.onEditAvatar
   const onEditProfile = props.onEditProfile
@@ -15,30 +14,6 @@ export default function Main(props) {
   const cards = props.cards
   const onCardLike = props.onCardLike
   const onCardDelete = props.onCardDelete
-
-  // const [userName, setUserName] = React.useState()
-  // const [userDescription, setUserDescription] = React.useState()
-  // const [userAvatar, setUserAvatar] = React.useState()
-  // const [cards, setCards] = React.useState([])
-
-  // React.useEffect(() => {
-  //   Promise.all([api.getUserInfo(), api.getInitialCards()])
-  //     .then(([user, cards]) => {
-  //       setUserName(user.name)
-  //       setUserDescription(user.about)
-  //       setUserAvatar(user.avatar)
-  //       setCards(cards)
-  //     })
-  //     .catch(err => console.log(err))
-  // }, [])
-
-  // React.useEffect(() => {
-  //   api.getInitialCards()
-  //     .then(cards => {
-  //       setCards(cards)
-  //     })
-  //     .catch(err => console.log(err))
-  // }, [])
 
   return (
     <main className="content">

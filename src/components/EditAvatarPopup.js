@@ -13,7 +13,7 @@ export default function EditAvatarPopup(props) {
   }
 
   React.useEffect(() => {
-    ref.current.value = "";
+    ref.current.value = ""
   }, [props.isOpen])
 
   return (
