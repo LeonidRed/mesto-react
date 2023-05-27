@@ -7,6 +7,7 @@ import ImagePopup from "./ImagePopup"
 import { api } from "../utils/Api"
 import { CurrentUserContext } from "../contexts/CurrentUserContext"
 import EditProfilePopup from "./EditProfilePopup"
+import EditAvatarPopup from "./EditAvatarPopup"
 
 
 function App() {
@@ -82,6 +83,16 @@ function App() {
       .catch((err) => console.log(err))
   }
 
+  function handleUpdateAvatar(data) {
+    api.changeAvatar(data)
+      .then((res) => {
+        console.log(res);
+        setCurrentUser(res)
+        closeAllPopups();
+      })
+      .catch((err) => console.log(err))
+  }
+
   function closeAllPopups() {
     setEditProfilePopupOpen(false)
     setAddPlacePopupOpen(false)
@@ -120,12 +131,11 @@ function App() {
           <span className="popup__input-error input-link-error">Вы пропустили это поле</span>
         </PopupWithForm>
 
-
-        <PopupWithForm name="avatar" title="Обновить аватар" buttonText="Сохранить" isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} >
-          <input className="popup__input" id="input-link-avatar" name="link" type="url" placeholder="Ссылка на картинку" required />
-          <span className="popup__input-error input-link-avatar-error">Вы пропустили это поле</span>
-        </PopupWithForm>
-
+        <EditAvatarPopup
+          isOpen={isEditAvatarPopupOpen}
+          onClose={closeAllPopups}
+          onUpdateAvatar={handleUpdateAvatar}
+        />
 
         <PopupWithForm name="delete" title="Вы уверены?" buttonText="Да" isOpen={isDeleteCardPopupOpen} onClose={closeAllPopups} />
 

@@ -81,7 +81,7 @@ class Api {
     return fetch(`${this._url}users/me/avatar`, {
       method: "PATCH",
       headers: this._headers,
-      body: JSON.stringify({ avatar: value.link })
+      body: JSON.stringify({ avatar: value.avatar })
     })
       .then(this._checkResponse)
   }
