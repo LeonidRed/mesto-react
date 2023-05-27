@@ -14,7 +14,6 @@ export default function PopupWithForm(props) {
           <button
             className="popup__button-save"
             type="submit"
-            disabled
           >
             {props.buttonText}
           </button>
