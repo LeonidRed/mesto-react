@@ -46,6 +46,7 @@ export default function EditAvatarPopup(props) {
         maxLength="30"
         required
         onChange={handleNameChange}
+        value={name || ''}
       />
       <span className="popup__input-error input-title-error">
         Вы пропустили это поле
@@ -58,6 +59,7 @@ export default function EditAvatarPopup(props) {
         placeholder="Ссылка на картинку"
         required
         onChange={handleLinkChange}
+        value={link || ''}
       />
       <span className="popup__input-error input-link-error">
         Вы пропустили это поле
